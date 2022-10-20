@@ -1,0 +1,19 @@
+{
+    "header": {
+            "apiKey":"8345e0c926be4f67bff9cc17fce407b0" 
+        },
+    "data": {
+        "email": "homero.simpson@gmail.com",
+        "password":"qwerty123",
+        "name": "Homero",
+        "midleName": "Jay",
+        "lastName": "Simpson",
+        "phone": 36244444544,
+        "cellphone": 3624123456,
+        "address": "Av. Siempreviva 742",
+        "postalCode": 3500,
+        "city": "Springfield",
+        "state": "CO",
+        "avatar": "avatar.jpg"
+        }
+}

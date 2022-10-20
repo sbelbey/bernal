@@ -1,0 +1,43 @@
+{
+    "header": {
+        "apiKey":"8345e0c926be4f67bff9cc17fce407b0" 
+    },
+    "data": {
+        "name": "Batería 12x65",
+        "brand": "Bernal",
+        "model": "M28Kd",
+        "description": "Lorem ipsum dolor sit amet, consect",
+        "origin": "Argentina",
+        "maintenance": false,
+        "waranty": 6,
+        "voltage":12,
+        "capacity": 75,
+        "measures": {
+            "height": 17.6,
+            "width": 17.5,
+            "length": 27.7
+        },
+        "stock": 10,
+        "active": true,
+        "images": [
+            "images.jpg",
+            "images1.jpg",
+            "images2.jpg"
+        ],
+        "category": "Autos",
+        "Vehicles": [
+            {
+                "Brand": "Peugeot",
+                "Model": "408",
+                "Engine": "H.D.I. 1.6",
+                "Year": "2018"
+            },
+            {
+                "Brand": "Fiat",
+                "Model": "Uno",
+                "Engine": "1.3 Nafta",
+                "Year": "2010"
+            }
+        ]
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "header": {
+        "apiKey":"8345e0c926be4f67bff9cc17fce407b0" 
+    },
+    "data": {
+        "Brand": "Peugeot",
+        "Model": "408",
+        "Engine": "H.D.I. 1.6",
+        "Year": "2018",
+        "Batery": {
+            "voltage":12,
+            "capacity": 75
+        }
+    }
+}
