@@ -10,7 +10,7 @@
 
 ## Endpoints
 
-### Bernal API has 2 main endpoints:
+### Bernal API has this endpoints:
 
 > GET /v1/products search every product in the DB, this endpoint is ideal for list al the products with a specificate order.
 
