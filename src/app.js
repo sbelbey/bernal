@@ -1,8 +1,14 @@
-const express = require('express');
-const app = express();
+const dotenv = require('dotenv');
+const createApp = require('./config/create-app');
 
-//Setting the port
-app.set('port', process.env.PORT || 8080);
+// LOAD .env
+dotenv.config();
 
-//Listening the port
-app.listen(app.get('port'), () => console.log('Server running on http://localhost:' + app.get('port')));
+// CREATE EXPRESS APP
+const app = createApp();
+
+app.post('/api/1.0/users', (req, res) => {
+  return res.status(200).send({ message: 'User created' });
+});
+
+module.exports = app;
