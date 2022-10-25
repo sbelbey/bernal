@@ -112,5 +112,21 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'vehicleId',
       timestamps: false,
     });
+
+    User.belongsToMany(models.Cart, {
+      as: 'carts',
+      through: 'cartUser',
+      foreignKey: 'userId',
+      otherKey: 'cartId',
+      timestamps: false,
+    });
+
+    User.belongsToMany(models.AvatarImage, {
+      as: 'avatars',
+      through: 'userAvatarImage',
+      foreignKey: 'userId',
+      otherKey: 'avatarImageId',
+      timestamps: false,
+    });
   };
 };

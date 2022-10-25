@@ -130,5 +130,13 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'stockImageId',
       timestamps: false,
     });
+
+    Product.belongsToMany(models.Cart, {
+      as: 'carts',
+      through: 'cartProduct',
+      foreignKey: 'productId',
+      otherKey: 'cartId',
+      timestamps: false,
+    });
   };
 };
