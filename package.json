@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "type": "module",
   "scripts": {
     "start": "nodemon src/app",
     "test": "jest --watch",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "sql:init": "sequelize init",
+    "sql:create": "sequelize db:create",
+    "sql:migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
+    "sql:seed": "sequelize db:seed:all",
+    "db:mg": "sequelize migration:generate --name=intermediates",
+    "db:sd": "sequelize seed:generate --name=product"
   },
   "repository": {
     "type": "git",
@@ -33,6 +38,7 @@
     "sequelize": "^6.25.3"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -40,7 +46,8 @@
     "nodemon": "^2.0.20",
     "prettier": "^2.7.1",
     "sequelize-cli": "^6.5.1",
-    "supertest": "^6.3.0"
+    "supertest": "^6.3.0",
+    "uuid": "^9.0.0"
   },
   "eslintConfig": {
     "parserOptions": {
