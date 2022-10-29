@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const alias = 'StockImage';
-  const cols = {
+  let cols = {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -17,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     },
   };
 
-  const config = {
+  let config = {
     tableName: 'stockImage',
     timestamp: false,
   };
 
-  const StockImage = sequelize.define(alias, cols, config);
+  let StockImage = sequelize.define('StockImage', cols, config);
 
   StockImage.associate = (models) => {
     StockImage.belongsToMany(models.Product, {
@@ -33,4 +32,5 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     });
   };
+  return StockImage;
 };

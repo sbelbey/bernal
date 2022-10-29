@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const alias = 'AvatarImage';
-  const cols = {
+  let cols = {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -17,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
     },
   };
 
-  const config = {
+  let config = {
     tableName: 'avatarImage',
     timestamps: false,
   };
 
-  const AvatarImage = sequelize.define(alias, cols, config);
+  let AvatarImage = sequelize.define('AvatarImage', cols, config);
 
   AvatarImage.associate = (models) => {
     AvatarImage.belongsToMany(models.User, {
@@ -33,4 +32,5 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     });
   };
+  return AvatarImage;
 };

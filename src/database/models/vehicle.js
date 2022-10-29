@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const alias = 'Vehicle';
-  const cols = {
+  let cols = {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -45,12 +44,12 @@ module.exports = (sequelize, DataTypes) => {
     },
   };
 
-  const config = {
+  let config = {
     tableName: 'vehicle',
     timestamps: true,
   };
 
-  const Vehicle = sequelize.define(alias, cols, config);
+  let Vehicle = sequelize.define('Vehicle', cols, config);
 
   Vehicle.associate = (models) => {
     Vehicle.belongsTo(models.User, {
@@ -84,4 +83,5 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     });
   };
+  return Vehicle;
 };

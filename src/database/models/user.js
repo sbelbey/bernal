@@ -1,11 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
-  const alias = 'User';
-  const cols = {
+  let cols = {
     id: {
-      type: DataTypes.INTEGER,
       allowNull: false,
-      autoIncrement: true,
       primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
     name: {
       type: DataTypes.STRING(40),
@@ -57,12 +56,12 @@ module.exports = (sequelize, DataTypes) => {
     },
   };
 
-  const config = {
+  let config = {
     tableName: 'user',
     timestamps: false,
   };
 
-  const User = sequelize.define(alias, cols, config);
+  let User = sequelize.define('User', cols, config);
 
   User.associate = (models) => {
     User.hasMany(models.Product, {
@@ -129,4 +128,5 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     });
   };
+  return User;
 };

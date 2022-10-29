@@ -26,9 +26,9 @@ module.exports = {
             stock: Number((Math.random() * 9999).toFixed(0)),
             isActive: true,
             createdAt: new Date(),
-            createdBy: 'f4712e90-246f-486c-8ea1-7c36d3b6281e',
+            createdBy: 'fb3bff4a-8da9-4925-bbf0-700bd74e4484',
             updatedAt: new Date(),
-            updatedBy: 'f4712e90-246f-486c-8ea1-7c36d3b6281e',
+            updatedBy: 'fb3bff4a-8da9-4925-bbf0-700bd74e4484',
           };
         })
     );

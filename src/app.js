@@ -1,14 +1,16 @@
+const express = require('express');
+const app = express();
 const dotenv = require('dotenv');
-const createApp = require('./config/create-app');
+
+const apiRouter = require('./routes/apiRouter');
 
 // LOAD .env
 dotenv.config();
 
-// CREATE EXPRESS APP
-const app = createApp();
+// MOUNT API ROUTER
+app.use('/api/v1', apiRouter);
 
-app.post('/api/1.0/users', (req, res) => {
-  return res.status(200).send({ message: 'User created' });
-});
+app.use(express.json());
 
+//EXPORTS FOR TESTS
 module.exports = app;

@@ -2,11 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
-const config = require(__dirname + '../../config/sequelize.js');
+const config = require(__dirname + '/../../config/sequelize.js');
 const db = {};
 
 let sequelize = new Sequelize(config.database, config.username, config.password, {
-  config,
+  ...config,
   logging: (msg) => {
     console.log(`[sequelize] ${msg}`);
   },
