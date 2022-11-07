@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
   let cols = {
     id: {
-      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
     isActive: {
       type: DataTypes.BOOLEAN(true),
@@ -15,16 +15,20 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     createdBy: {
-      type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: true,
     },
     updatedBy: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
   };
 

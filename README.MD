@@ -12,5 +12,41 @@
 
 ### Bernal API has this endpoints:
 
-> GET /v1/products search every product in the DB, this endpoint is ideal for list al the products with a specificate order.
+> POST /api/v1/users/register to create a new user account. This endpoint requires a json object: {
+>
+> > "email": "user@gmail.com",
+> > "emailConfirm": "user@hotmail.com",
+> > "password": "Qwerty123!",
+> > "passwordConfirm": "Qwerty123!"
+> > }
+> > This user will be actived by default and will not be an administrator account.
 
+> POST /api/v1/users/login to login to a user account. This endpoint requires a json object: {
+>
+> > "email": "lisaSimpson@gmail.com",
+> > "password": "Qwerty123!",
+> > "rememberMe": true
+> > }
+
+> PUT /api/v1/users to update an user information. This endpoint requires a token that have to be provided by the client through the request header, it is a Bearer Token, and accepts a json object with the following fields, which are not requires: {
+>
+> > "avatar": "IMG_2197.jpg",
+> > "email": "user@gmail.com",
+> > "password": "Qwerty123!",
+> > "name": "User",
+> > "middleName": "Jay",
+> > "lastName": "Simpson",
+> > "phoneNumber": "3624444544",
+> > "cellphone" : "3624123456",
+> > "address": "Av. Siempreviva 742",
+> > "postalCode": "3500"
+> > "city": "Springfield",
+> > "province": "Texas",
+> > "isActive": "true",
+> > }
+
+> GET /api/v1/users/all to get all users who are register. This endpoint requires a token that have to be provided by the client through the request header, it is a Bearer Token and it will be used by admin users only.
+
+> GET /api/v1/users/ to get an user who are register. This endpoint requires a token that have to be provided by the client through the request header, it is a Bearer Token.
+
+> GET /v1/products search every product in the DB, this endpoint is ideal for list al the products with a specificate order.

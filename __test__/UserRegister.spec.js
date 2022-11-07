@@ -1,11 +1,11 @@
 const request = require('supertest');
 const app = require('../src/app');
-// // const { User } = require('../src/database/models');
-// // const db = require('../src/database/models/index.js');
+const { User } = require('../src/database/models');
+const db = require('../src/database/models/index.js');
 
-// beforeAll(() => {
-//   return db.sync();
-// });
+beforeAll(() => {
+  return global.db.sync();
+});
 // beforeEach(() => {
 //   return db.destoy({ truncate: true });
 // });

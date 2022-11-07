@@ -10,7 +10,7 @@ module.exports = {
         defaultValue: DataTypes.UUIDV4,
       },
       name: {
-        type: DataTypes.STRING(30),
+        type: DataTypes.STRING(80),
         allowNull: false,
       },
       url: {

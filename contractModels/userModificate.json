@@ -1,19 +1,19 @@
 {
     "header": {
-            "apiKey":"8345e0c926be4f67bff9cc17fce407b0" 
+            "bearer":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkYzcxOWIwLWU1NzktNGI1Ni04NDBmLTMwOGU2MmU0MjEzMCIsInVzZXJFbWFpbCI6InNhdWxiZWxiZXlAaG90bWFpbC5jb20iLCJpYXQiOjE2NjczOTc1MzcsImV4cCI6MTY2NzM5NzU5N30.jNV0xvQxC1nPVc3q7fIND2rLAd7XOAVtxxs1VwRVZLI" 
         },
-    "data": {
+    "body": {
         "email": "homero.simpson@gmail.com",
         "password":"qwerty123",
         "name": "Homero",
-        "midleName": "Jay",
+        "middleName": "Jay",
         "lastName": "Simpson",
         "phone": 36244444544,
         "cellphone": 3624123456,
         "address": "Av. Siempreviva 742",
         "postalCode": 3500,
         "city": "Springfield",
-        "state": "CO",
+        "province": "CO",
         "avatar": "avatar.jpg"
         }
 }

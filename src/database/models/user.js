@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(40),
       allowNull: true,
     },
-    midleName: {
+    middleName: {
       type: DataTypes.STRING(40),
       allowNull: true,
     },
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(80),
       allowNull: false,
     },
-    hasPassword: {
+    hashPassword: {
       type: DataTypes.STRING(100),
       allowNull: false,
     },
@@ -31,11 +31,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     phoneNumber: {
-      type: DataTypes.INTEGER(10),
+      type: DataTypes.BIGINT(20),
       allowNull: true,
     },
     cellphone: {
-      type: DataTypes.INTEGER(10),
+      type: DataTypes.BIGINT(20),
       allowNull: true,
     },
     city: {

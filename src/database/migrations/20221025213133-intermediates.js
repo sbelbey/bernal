@@ -5,9 +5,9 @@ module.exports = {
     await queryInterface.createTable('cartProduct', {
       id: {
         allowNull: false,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
       },
       cartId: {
         type: DataTypes.UUID,
@@ -32,9 +32,9 @@ module.exports = {
     await queryInterface.createTable('cartUser', {
       id: {
         allowNull: false,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
       },
       userId: {
         type: DataTypes.UUID,
@@ -59,9 +59,9 @@ module.exports = {
     await queryInterface.createTable('userAvatarImage', {
       id: {
         allowNull: false,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
       },
       userId: {
         type: DataTypes.UUID,
@@ -86,9 +86,9 @@ module.exports = {
     await queryInterface.createTable('productCategory', {
       id: {
         allowNull: false,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
       },
       productId: {
         type: DataTypes.UUID,
@@ -113,9 +113,9 @@ module.exports = {
     await queryInterface.createTable('productVehicleType', {
       id: {
         allowNull: false,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
       },
       productId: {
         type: DataTypes.UUID,
@@ -140,9 +140,9 @@ module.exports = {
     await queryInterface.createTable('productVehicle', {
       id: {
         allowNull: false,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
       },
       productId: {
         type: DataTypes.UUID,
@@ -167,9 +167,9 @@ module.exports = {
     await queryInterface.createTable('productStockImage', {
       id: {
         allowNull: false,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
       },
       productId: {
         type: DataTypes.UUID,
@@ -194,9 +194,9 @@ module.exports = {
     await queryInterface.createTable('userVehicle', {
       id: {
         allowNull: false,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
       },
       userId: {
         type: DataTypes.UUID,

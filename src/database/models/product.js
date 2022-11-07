@@ -71,16 +71,20 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     createdBy: {
-      type: DataTypes.UUID,
       allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
     updatedAt: {
       type: DataTypes.DATE,
       allowNull: true,
     },
     updatedBy: {
+      allowNull: false,
+      primaryKey: true,
       type: DataTypes.UUID,
-      allowNull: true,
+      defaultValue: DataTypes.UUIDV4,
     },
   };
 

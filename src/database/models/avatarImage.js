@@ -1,13 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
   let cols = {
     id: {
-      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
     name: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING(80),
       allowNull: false,
     },
     url: {
