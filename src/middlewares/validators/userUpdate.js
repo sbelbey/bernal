@@ -1,5 +1,5 @@
 const { check } = require('express-validator');
-const { findUser } = require('../services/userServices');
+const { findUser } = require('../../services/userServices');
 const path = require('path');
 
 module.exports = [
@@ -13,29 +13,44 @@ module.exports = [
         throw new Error('The email address is already registered.');
       }
     })
-    .normalizeEmail(),
+    .normalizeEmail()
+    .optional(),
   check('password')
     .isLength({ min: 8 })
     .withMessage('The password must be at least 8 characters long.')
     .isStrongPassword()
-    .withMessage('The password is not strong enough.'),
-  check('name').trim().escape(),
-  check('middleName').trim().escape(),
-  check('lastName').trim().escape(),
-  check('phoneNumber').isLength({ min: 8 }).withMessage('The phone number must be at least 8 characters long.'),
+    .withMessage('The password is not strong enough.')
+    .optional(),
+  check('name').trim().escape().optional(),
+  check('middleName').trim().escape().optional(),
+  check('lastName').trim().escape().optional(),
+  check('phoneNumber')
+    .isLength({ min: 8 })
+    .withMessage('The phone number must be at least 8 characters long.')
+    .optional(),
   check('cellphone')
     .isLength({ min: 8 })
     .withMessage('The phone number must be at least 8 characters long.')
     .trim()
-    .escape(),
-  check('address').isLength({ min: 8 }).withMessage('The adress must be at least 8 characters long.'),
-  check('postalCode').isLength({ min: 4 }).withMessage('The postal code must be at least 4 characters long.'),
-  check('city').isLength({ min: 4 }).withMessage('The city name must be at least 4 characters long.').trim().escape(),
+    .escape()
+    .optional(),
+  check('address').isLength({ min: 8 }).withMessage('The adress must be at least 8 characters long.').optional(),
+  check('postalCode')
+    .isLength({ min: 4 })
+    .withMessage('The postal code must be at least 4 characters long.')
+    .optional(),
+  check('city')
+    .isLength({ min: 4 })
+    .withMessage('The city name must be at least 4 characters long.')
+    .trim()
+    .escape()
+    .optional(),
   check('province')
     .isLength({ min: 4 })
     .withMessage('The province must be at least 4 characters long.')
     .trim()
-    .escape(),
+    .escape()
+    .optional(),
   check('avatar')
     .custom(async (value, { req }) => {
       if (!req.file) {
@@ -58,5 +73,5 @@ module.exports = [
           return false;
       }
     })
-    .withMessage('Por favor, sube una imagen de extensión jpg, jpeg, png o gif'),
+    .withMessage('The images must be jpg, jpeg, png or gif'),
 ];

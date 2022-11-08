@@ -20,6 +20,7 @@
 > > "passwordConfirm": "Qwerty123!"
 > > }
 > > This user will be actived by default and will not be an administrator account.
+> > Password minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1,
 
 > POST /api/v1/users/login to login to a user account. This endpoint requires a json object: {
 >
@@ -28,7 +29,7 @@
 > > "rememberMe": true
 > > }
 
-> PUT /api/v1/users to update an user information. This endpoint requires a token that have to be provided by the client through the request header, it is a Bearer Token, and accepts a json object with the following fields, which are not requires: {
+> PUT /api/v1/users to update an user information. This endpoint requires a token that have to be provided by the client through the request header, it is a Bearer Token, and accepts a json object with the following fields, which are not requires anyone: {
 >
 > > "avatar": "IMG_2197.jpg",
 > > "email": "user@gmail.com",

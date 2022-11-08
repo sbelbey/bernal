@@ -51,16 +51,16 @@ const userServices = {
       }
 
       let userModified = await userToUpdate.update({
-        name: userData.name,
-        middleName: userData.middleName,
-        lastName: userData.lastName,
-        email: userData.email,
-        hashpassword: bcrypt.hashSync(userData.hashpassword, 10),
-        address: userData.address,
-        phoneNumber: userData.phoneNumber,
-        cellphone: userData.cellphone,
-        city: userData.city,
-        state: userData.state,
+        name: userData.name ?? userToUpdate.name,
+        middleName: userData.middleName ?? userToUpdate.middleName,
+        lastName: userData.lastName ?? userToUpdate.lastName,
+        email: userData.email ?? userToUpdate.email,
+        hashPassword: userData.hashPassword ? bcrypt.hashSync(userData.hashPassword, 10) : userToUpdate.hashPassword,
+        address: userData.address ?? userToUpdate.address,
+        phoneNumber: userData.phoneNumber ?? userToUpdate.phoneNumber,
+        cellphone: userData.cellphone ?? userToUpdate.cellphone,
+        city: userData.city ?? userToUpdate.city,
+        province: userData.province ?? userToUpdate.province,
       });
 
       return userModified;

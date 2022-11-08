@@ -1,5 +1,5 @@
 const { check } = require('express-validator');
-const { findUser } = require('../services/userServices');
+const { findUser } = require('../../services/userServices');
 const path = require('path');
 
 module.exports = [

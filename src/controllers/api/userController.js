@@ -101,7 +101,7 @@ module.exports = {
       const dataToUpdate = {
         id: id,
         email: req.body.email ? req.body.email : null,
-        hashpassword: req.body.password ? req.body.password : null,
+        hashPassword: req.body.password ? req.body.password : null,
         name: req.body.name ? req.body.name : null,
         middleName: req.body.middleName ? req.body.middleName : null,
         lastName: req.body.lastName ? req.body.lastName : null,
