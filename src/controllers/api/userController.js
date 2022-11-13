@@ -40,7 +40,7 @@ module.exports = {
         },
       });
     } catch (error) {
-      res.status(500).send({ message: error.message });
+      res.status(500).json({ message: error.message });
     }
   },
   login: async (req, res) => {
@@ -85,7 +85,7 @@ module.exports = {
         data: userCleaned,
       });
     } catch (error) {
-      res.status(500).send({ message: error.message });
+      res.status(500).json({ message: error.message });
     }
   },
   update: async (req, res) => {
@@ -130,17 +130,6 @@ module.exports = {
   },
   getAllUsers: async (req, res) => {
     try {
-      const { id } = req;
-      const userToVerify = await findUser(undefined, id);
-
-      if (!userToVerify || !userToVerify.isAdmin) {
-        return res.status(401).json({
-          errors: {
-            msg: 'Invalid Credentials',
-          },
-        });
-      }
-
       const allUsersGot = await allUsers();
       const usersCleaned = await allUsersGot.map((user) => userCleaner(user));
 

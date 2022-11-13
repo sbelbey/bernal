@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 
   let config = {
     tableName: 'stockImage',
-    timestamp: false,
+    timestamps: false,
   };
 
   let StockImage = sequelize.define('StockImage', cols, config);

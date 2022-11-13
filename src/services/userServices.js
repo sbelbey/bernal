@@ -8,7 +8,7 @@ const userServices = {
       const userCreated = await User.create(userData);
       return userCreated;
     } catch (error) {
-      return { error };
+      return { message: error.message };
     }
   },
   findUser: async (email = '', id = '') => {
@@ -22,7 +22,7 @@ const userServices = {
 
       return userFound;
     } catch (error) {
-      return { error };
+      return { message: error.message };
     }
   },
   updateUser: async (userData) => {
@@ -73,7 +73,7 @@ const userServices = {
       const allUsers = await User.findAll({ include: { all: true } });
       return allUsers;
     } catch (error) {
-      return { error };
+      return { message: error.message };
     }
   },
 };

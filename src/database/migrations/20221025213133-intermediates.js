@@ -99,7 +99,7 @@ module.exports = {
           key: 'id',
         },
       },
-      categorytId: {
+      categoryId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,

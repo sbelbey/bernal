@@ -62,15 +62,15 @@ module.exports = [
       const extention = path.extname(req.file.originalname);
       switch (extention) {
         case '.jpg':
-          return '.jpg';
+          return true;
         case '.jpeg':
-          return '.jpeg';
+          return true;
         case '.png':
-          return '.png';
+          return true;
         case '.gif':
-          return '.gif';
+          return true;
         default:
-          return false;
+          throw new Error('The images must be jpg, jpeg, png or gif.');
       }
     })
     .withMessage('The images must be jpg, jpeg, png or gif'),

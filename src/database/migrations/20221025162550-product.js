@@ -50,15 +50,15 @@ module.exports = {
         allowNull: true,
       },
       height: {
-        type: DataTypes.DECIMAL(3, 2),
+        type: DataTypes.DECIMAL(5, 2),
         allowNull: true,
       },
       width: {
-        type: DataTypes.DECIMAL(3, 2),
+        type: DataTypes.DECIMAL(5, 2),
         allowNull: true,
       },
       length: {
-        type: DataTypes.DECIMAL(3, 2),
+        type: DataTypes.DECIMAL(5, 2),
         allowNull: true,
       },
       stock: {

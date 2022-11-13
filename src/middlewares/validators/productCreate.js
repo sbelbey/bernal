@@ -1,5 +1,4 @@
 const { check } = require('express-validator');
-const { findUser } = require('../../services/userServices');
 const path = require('path');
 
 module.exports = [
@@ -59,44 +58,55 @@ module.exports = [
   check('length').isFloat().withMessage('Must provide an float value.').toFloat().optional(),
   check('stock').notEmpty().isInt().withMessage('Must provide an integer value.').toInt(),
   check('isActive').isBoolean().withMessage('Must provide a boolean value.').optional().toBoolean(),
+  check('categories')
+    .notEmpty()
+    .withMessage('Have to provide a category')
+    .isLength({ max: 40 })
+    .withMessage('The category must not be greater than 40 characters.')
+    .trim()
+    .escape(),
   check('images')
     .custom((value, { req }) => {
-      req.files.forEach((file) => {
+      let image = req.files.map((file) => {
         let imagen = file.filename;
         let extension = path.extname(imagen);
         switch (extension) {
           case '.jpg':
-            return '.jpg';
+            return true;
           case '.jpeg':
-            return '.jpeg';
+            return true;
           case '.png':
-            return '.png';
+            return true;
           case '.gif':
-            return '.gif';
+            return true;
           default:
             return false;
         }
       });
+      if (image.includes(false)) {
+        throw new Error('The images must be jpg, jpeg, png or gif.');
+      }
+      return true;
     })
     .withMessage('The images must be jpg, jpeg, png or gif')
     .optional(),
-  check('categories')
-  .
+  check('vehicles')
+    .custom((value) => {
+      let val = value.split(',').map((vehicle) => {
+        let regex = new RegExp(
+          '^(?:[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[a-f0-9]{4}-[a-f0-9]{12})|(?:0{8}-0{4}-0{4}-0{4}-0{12})$'
+        );
+        let isUUID = regex.test(vehicle);
+        return isUUID;
+      });
+      return val.includes(true);
+    })
+    .withMessage('Must to provide a UUID for the vehicle')
+    .custom((value) => {
+      value.split(',').forEach((vehicle) => {
+        vehicle.trim();
+      });
+      return true;
+    })
+    .optional(),
 ];
-
-//     "category": "Autos",
-//     "Vehicles": [
-//         {
-//             "Brand": "Peugeot",
-//             "Model": "408",
-//             "Engine": "H.D.I. 1.6",
-//             "Year": "2018"
-//         },
-//         {
-//             "Brand": "Fiat",
-//             "Model": "Uno",
-//             "Engine": "1.3 Nafta",
-//             "Year": "2010"
-//         }
-//     ]
-// }
