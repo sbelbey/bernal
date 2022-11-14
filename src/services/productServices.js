@@ -23,6 +23,14 @@ const productService = {
       console.log(error);
     }
   },
+  changeProduct: async (productToUpdate, productData) => {
+    try {
+      const productModified = await productToUpdate.update(productData)
+      return productModified;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 module.exports = productService;

@@ -12,6 +12,23 @@ const stockImagesService = {
       console.log(error);
     }
   },
+  findProductImages: async (product) => {
+    try {
+      const prductImages = await product.getImages();
+      return prductImages;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  deleteProductImages: async (productId, imagesToDelete) => {
+    try {
+      await imagesToDelete.forEach(async (image) => {
+        await image.removeProduct(productId);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 module.exports = stockImagesService;

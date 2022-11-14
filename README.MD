@@ -1,7 +1,9 @@
 # Baterias Bernal e-Commerce
 
 > Jira: https://sbelbey.atlassian.net/jira/software/projects/DECB/boards/1
+
 > OneDrive: https://onedrive.live.com/?authkey=%21AMlUtg7hmY6yhCY&id=7D7742697C67D2BE%21309553&cid=7D7742697C67D2BE
+
 > Figma: https://www.figma.com/file/Qb2QDOdtcfpyZoO0eDSjwQ/Web-bernal?node-id=0%3A1&t=DvZuhnbo0T68Dacm-0
 
 ## Introduction
@@ -26,7 +28,9 @@
 > > > "emailConfirm": "user@hotmail.com",
 > > > "password": "Qwerty123!",
 > > > "passwordConfirm": "Qwerty123!"
-> > > }
+> >
+> > }
+> >
 > > > This user will be actived by default and will not be an administrator account.
 > > > Password minLength: 8, minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 1,
 
@@ -37,7 +41,8 @@
 > > > "email": "lisaSimpson@gmail.com",
 > > > "password": "Qwerty123!",
 > > > "rememberMe": true
-> > > }
+> >
+> > }
 
 > PUT /api/v1/users to update an user information. This endpoint requires a token that have to be provided by the client through the request header, it is a Bearer Token, and accepts a json object with the following fields, which are not requires anyone:
 
@@ -56,7 +61,8 @@
 > > > "city": "Springfield",
 > > > "province": "Texas",
 > > > "isActive": "true",
-> > > }
+> >
+> > }
 
 > GET /api/v1/users/all to get all users who are register. This endpoint requires a token that have to be provided by the client through the request header, it is a Bearer Token and it will be used by admin users only.
 
@@ -68,33 +74,76 @@
 
 > > {
 > >
-> > > "name": "Batería 12x65", > > (Required)
-> > > "brand": "Bernal", > > (Required)
-> > > "model": "M28Kd", > > (Optional)
-> > > "price": 12.50, > > (Required)
-> > > "description": "Lorem ipsum dolor sit amet, consect", > > (Required)
-> > > "origin": "Argentina", > > (Required)
-> > > "maintenanceFree": false, > > (Optional)
-> > > "waranty": 6, > > (Required)
-> > > "voltage":12, > > (Optional)
-> > > "capacity": 75, > > (Optional)
-> > > "height": 17.6, > > (Optional)
-> > > "width": 17.5, > > (Optional)
-> > > "length": 27.7, > > (Optional)
-> > > "stock": 10, > > (Required)
-> > > "isActive": true, > > (Optional)
-> > > "images": [ > > (Optional)
+> > > "name": "Batería 12x65", (Required)
+> > > "brand": "Bernal", (Required)
+> > > "model": "M28Kd", (Optional)
+> > > "price": 12.50, (Required)
+> > > "description": "Lorem ipsum dolor sit amet, consect", (Required)
+> > > "origin": "Argentina", (Required)
+> > > "maintenanceFree": false, (Optional)
+> > > "waranty": 6, (Required)
+> > > "voltage":12, (Optional)
+> > > "capacity": 75, (Optional)
+> > > "height": 17.6, (Optional)
+> > > "width": 17.5, (Optional)
+> > > "length": 27.7, (Optional)
+> > > "stock": 10, (Required)
+> > > "isActive": true, (Optional)
+> > > "images": [ (Optional)
 > > >
 > > > > "images.jpg",
 > > > > "images1.jpg",
 > > > > "images2.jpg"
-> > > > ],
-> > > > "categories": "Autos", > > (Required)
-> > > > "Vehicles": [ > > (Optional)
-> > > > > > > > "e3fb9c95-3f15-4f95-9e82-22f87d64d3d8",
-> > > > > > > > "fd00dd96-e4a5-4960-b21b-58c1abec636a",
-> > > > > > > > "f1016823-f699-4340-8040-bb407d73962c"
-> > > > > > > ]
-> > > > }
+> > >
+> > > ],
+> > >
+> > > > "categories": "Autos", (Required)
+> > > > "Vehicles": [ (Optional)
+> > >
+> > > > "e3fb9c95-3f15-4f95-9e82-22f87d64d3d8",
+> > > > "fd00dd96-e4a5-4960-b21b-58c1abec636a",
+> > > > "f1016823-f699-4340-8040-bb407d73962c"
+> > >
+> > > ]
+> >
+> > }
+
+> PUT /api/v1/products to update a new product. This endpoint requires a token that have to be provided by the client through the request header, it is a Bearer Token and it will be used by admin users only. Also it need a json with the following fields:
+
+> > {
+> >
+> > > "name": "Batería 12x65", (Required)
+> > > "brand": "Bernal", (Required)
+> > > "model": "M28Kd", (Optional)
+> > > "price": 12.50, (Required)
+> > > "description": "Lorem ipsum dolor sit amet, consect", (Required)
+> > > "origin": "Argentina", (Required)
+> > > "maintenanceFree": false, (Optional)
+> > > "waranty": 6, (Required)
+> > > "voltage":12, (Optional)
+> > > "capacity": 75, (Optional)
+> > > "height": 17.6, (Optional)
+> > > "width": 17.5, (Optional)
+> > > "length": 27.7, (Optional)
+> > > "stock": 10, (Required)
+> > > "isActive": true, (Optional)
+> > > "images": [ (Optional)
+> > >
+> > > > "images.jpg",
+> > > > "images1.jpg",
+> > > > "images2.jpg"
+> > >
+> > > ],
+> > >
+> > > > "categories": "Autos", (Required)
+> > > > "Vehicles": [ (Optional)
+> > >
+> > > > "e3fb9c95-3f15-4f95-9e82-22f87d64d3d8",
+> > > > "fd00dd96-e4a5-4960-b21b-58c1abec636a",
+> > > > "f1016823-f699-4340-8040-bb407d73962c"
+> > >
+> > > ]
+> >
+> > }
 
 > GET /v1/products search every product in the DB, this endpoint is ideal for list al the products with a specificate order.

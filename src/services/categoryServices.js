@@ -15,6 +15,23 @@ categoryServices = {
       console.log(error);
     }
   },
+  deleteProductCategories: async (productId, categoryData) => {
+    try {
+      await categoryData.forEach(async (category) => {
+        await category.removeProduct(productId);
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  findProductCategories: async (product) => {
+    try {
+      const productCategories = product.getCategories();
+      return productCategories;
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 module.exports = categoryServices;
