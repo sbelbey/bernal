@@ -13,7 +13,7 @@ module.exports = {
         type: DataTypes.STRING(20),
         allowNull: false,
       },
-      vehicle: {
+      vehicleId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,

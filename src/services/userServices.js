@@ -19,7 +19,14 @@ const userServices = {
         },
         include: { all: true },
       });
-
+      return userFound;
+    } catch (error) {
+      return { message: error.message };
+    }
+  },
+  findOnlyUsers: async (id) => {
+    try {
+      const userFound = await User.findByPk(id);
       return userFound;
     } catch (error) {
       return { message: error.message };
@@ -68,10 +75,13 @@ const userServices = {
       return { message: error.message };
     }
   },
-  allUsers: async () => {
+  allUsers: async (offset) => {
     try {
-      const allUsers = await User.findAll({ include: { all: true } });
-      return allUsers;
+      const { count, rows } = await User.findAndCountAll({
+        limit: 10,
+        offset: offset,
+      });
+      return { count, rows };
     } catch (error) {
       return { message: error.message };
     }

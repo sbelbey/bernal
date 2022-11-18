@@ -1,15 +1,13 @@
 {
     "header": {
-        "apiKey":"8345e0c926be4f67bff9cc17fce407b0" 
+        "bearer":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkYzcxOWIwLWU1NzktNGI1Ni04NDBmLTMwOGU2MmU0MjEzMCIsInVzZXJFbWFpbCI6InNhdWxiZWxiZXlAaG90bWFpbC5jb20iLCJpYXQiOjE2NjczOTc1MzcsImV4cCI6MTY2NzM5NzU5N30.jNV0xvQxC1nPVc3q7fIND2rLAd7XOAVtxxs1VwRVZLI" 
     },
     "data": {
-        "Brand": "Peugeot",
-        "Model": "408",
-        "Engine": "H.D.I. 1.6",
-        "Year": "2018",
-        "Batery": {
-            "voltage":12,
-            "capacity": 75
-        }
+        "brand": "Peugeot",
+        "model": "408",
+        "engine": "H.D.I. 1.6",
+        "year": "2018",
+        "type": "auto",
+        "products": "a9a200d2-1237-4d3c-94e7-ebfbb6585fb5,0f3ab32b-c957-4147-852a-914f8284d9a7"
     }
 }

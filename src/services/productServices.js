@@ -1,5 +1,4 @@
 const { User, Product } = require('../database/models');
-const { Op } = require('sequelize');
 
 const productService = {
   addProduct: async (productData) => {
@@ -7,7 +6,7 @@ const productService = {
       const productCreated = await Product.create(productData);
       return productCreated;
     } catch (error) {
-      console.log(error);
+      return { message: error.message };
     }
   },
   findProduct: async (id) => {
@@ -20,15 +19,28 @@ const productService = {
       });
       return productFound;
     } catch (error) {
-      console.log(error);
+      return { message: error.message };
     }
   },
   changeProduct: async (productToUpdate, productData) => {
     try {
-      const productModified = await productToUpdate.update(productData)
+      const productModified = await productToUpdate.update(productData);
       return productModified;
     } catch (error) {
-      console.log(error);
+      return { message: error.message };
+    }
+  },
+  allProducts: async (offset) => {
+    try {
+      const { count, rows } = await Product.findAndCountAll({
+        // include: { all: true },
+        limit: 10,
+        offset: offset,
+      });
+
+      return { count, rows };
+    } catch (error) {
+      return { message: error.message };
     }
   },
 };

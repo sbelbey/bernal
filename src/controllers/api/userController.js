@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const { createUser, findUser, updateUser, allUsers } = require('../../services/userServices');
 const { userCleaner } = require('../../helpers/dataCleaner');
+const { paging } = require('../../helpers/paging');
 
 module.exports = {
   register: async (req, res) => {
@@ -130,10 +131,20 @@ module.exports = {
   },
   getAllUsers: async (req, res) => {
     try {
-      const allUsersGot = await allUsers();
-      const usersCleaned = await allUsersGot.map((user) => userCleaner(user));
+      const pageOffset = req.query.page ? (req.query.page - 1) * 10 : 0;
+      const page = req.query.page ?? 0;
 
-      return res.status(200).json(usersCleaned);
+      let { count, rows } = await allUsers(pageOffset);
+      rows = await rows.map((user) => userCleaner(user));
+
+      let data = {
+        countItems: count,
+        items: rows,
+      };
+
+      const usersPaginated = await paging(data, page, 'users');
+
+      return res.status(200).json(usersPaginated);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

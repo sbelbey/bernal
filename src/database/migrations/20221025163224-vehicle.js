@@ -38,7 +38,7 @@ module.exports = {
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         references: {
-          model: 'category',
+          model: 'user',
           key: 'id',
         },
       },
@@ -51,7 +51,7 @@ module.exports = {
         defaultValue: DataTypes.UUIDV4,
         allowNull: true,
         references: {
-          model: 'category',
+          model: 'user',
           key: 'id',
         },
       },

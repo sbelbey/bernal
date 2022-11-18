@@ -16,11 +16,22 @@ module.exports = {
     delete userData.dataValues.cartUpdated;
     delete userData.dataValues.cartCreated;
 
-    userData.dataValues.avatars.forEach((avatar) => {
-      delete avatar.dataValues.id;
-      delete avatar.dataValues.userAvatarImage;
-    });
+    userData.dataValues.avatars
+      ? userData.dataValues.avatars.forEach((avatar) => {
+          delete avatar.dataValues.id;
+          delete avatar.dataValues.userAvatarImage;
+        })
+      : null;
 
     return userData;
+  },
+  productCleaner: (productData) => {
+    delete productData.dataValues.isActive;
+    delete productData.dataValues.createdAt;
+    delete productData.dataValues.createdBy;
+    delete productData.dataValues.updatedAt;
+    delete productData.dataValues.updatedBy;
+
+    return productData;
   },
 };

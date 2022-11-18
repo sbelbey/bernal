@@ -1,10 +1,17 @@
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 
-const { findUser } = require('../../services/userServices');
-const { addProduct, findProduct, changeProduct } = require('../../services/productServices');
+const { findOnlyUsers } = require('../../services/userServices');
+const { addProduct, findProduct, changeProduct, allProducts } = require('../../services/productServices');
 const { addProductImages, deleteProductImages, findProductImages } = require('../../services/stockImagesServices');
-const { addCategoryProduct, deleteProductCategories, findProductCategories } = require('../../services/categoryServices');
+const {
+  addCategoryProduct,
+  deleteProductCategories,
+  findProductCategories,
+} = require('../../services/categoryServices');
+
+const { productCleaner } = require('../../helpers/dataCleaner');
+const { paging } = require('../../helpers/paging');
 
 const imagesObjectConstractor = require('../../helpers/imagesObjectConstractor');
 
@@ -63,7 +70,7 @@ module.exports = {
       // Get the product created.
       const productWithImages = await findProduct(productCreated.id);
 
-      res.status(200).json({ data: productWithImages });
+      res.status(201).json({ message: 'Product was created successfully', product: productWithImages });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -95,7 +102,6 @@ module.exports = {
         updatedBy: userId,
       };
 
-      
       //Update the product images if the client changed it.
       if (req.files.length > 0) {
         const images = imagesObjectConstractor(req.files);
@@ -110,12 +116,107 @@ module.exports = {
         await deleteProductCategories(id, productCategoriesToDelete);
         await addCategoryProduct(userId, id, categories);
       }
-      
+
       const updatedProduct = await changeProduct(productToUpdate, updateData);
-      
-      return res.status(200).json({ Message: 'Product updated successfully', Product: updatedProduct });
+
+      return res.status(202).json({ message: 'Product updated successfully', Product: updatedProduct });
     } catch (error) {
       res.status(500).json({ message: error.message });
+    }
+  },
+  deleteProduct: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const productToDelete = await findProduct(id);
+
+      if (!productToDelete || !productToDelete.isActive)
+        return res.status(404).json({ error: { message: 'Product not found' } });
+
+      const deleteData = {
+        isActive: false,
+      };
+
+      const productDeleted = await changeProduct(productToDelete, deleteData);
+
+      return res.status(202).json({ message: 'Product was deleted successfully', productId: id });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  getProduct: async (req, res) => {
+    try {
+      //Get product information
+      const { id } = req.params;
+      let productFound = await findProduct(id);
+
+      //Get user token
+      const authorization = req.get('authorization');
+      let token = '';
+      if (authorization && authorization.toLowerCase().startsWith('bearer')) {
+        token = authorization.substring(7);
+      }
+
+      //Decoding the token
+      let decodedToken = {};
+      try {
+        decodedToken = jwt.verify(token, process.env.SECRET);
+      } catch (error) {
+        console.log(error);
+      }
+
+      const user = await findOnlyUsers(decodedToken.id);
+
+      //Looking the product
+      if (!productFound || !productFound.isActive)
+        return res.status(404).json({ error: { message: 'Product not found' } });
+
+      //Clean the product data for no admin users
+      if (!token || !decodedToken.id || !user.isAdmin) productFound = productCleaner(productFound);
+
+      return res.status(200).json({ message: 'Product was found successfully', product: productFound });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  getAllProduct: async (req, res) => {
+    try {
+      //Get the page
+      const pageOffset = req.query.page ? (req.query.page - 1) * 10 : 0;
+      const page = req.query.page ?? 0;
+
+      //Get the products information
+      let { count, rows } = await allProducts(pageOffset);
+
+      //Get user token
+      const authorization = req.get('authorization');
+      let token = '';
+      if (authorization && authorization.toLowerCase().startsWith('bearer')) {
+        token = authorization.substring(7);
+      }
+
+      //Decoding the token
+      let decodedToken = {};
+      try {
+        decodedToken = jwt.verify(token, process.env.SECRET);
+      } catch (error) {
+        console.log(error);
+      }
+
+      const user = await findOnlyUsers(decodedToken.id);
+
+      if (!token || !decodedToken.id || !user.isAdmin) rows.forEach((row) => productCleaner(row));
+
+      let data = {
+        countItems: count,
+        items: rows,
+      };
+
+      //Make de paging object
+      const productsData = await paging(data, page, 'products');
+
+      return res.status(200).json(productsData);
+    } catch (error) {
+      console.log(error);
     }
   },
 };

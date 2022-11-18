@@ -22,6 +22,6 @@ module.exports = (req, res, next) => {
     });
   }
   req.id = decodedToken.id;
-  
+
   next();
 };

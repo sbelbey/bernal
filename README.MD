@@ -146,4 +146,8 @@
 > >
 > > }
 
-> GET /v1/products search every product in the DB, this endpoint is ideal for list al the products with a specificate order.
+> DELETE /api/v1/products/:id delete the product by id. This endpoint requires a token that have to be provided by the client through the request header, it is a Bearer Token.
+
+> GET /api/v1/products/:id search an specific product in the DB, this endpoint can be use with a Bearer Token wich show the product with all it properties.
+
+> GET /api/v1/products/ show all products in the DB paging, this endpoint can be use with a Bearer Token wich show the product with all it properties. Also, this endpoint accepts a param which is: ?page= to get an specific page.

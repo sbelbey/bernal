@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Vehicle.hasMany(models.VehicleType, {
-      as: 'type',
+      as: 'types',
       foreignKey: 'vehicleId',
     });
 

@@ -1,9 +1,8 @@
-const { findUser } = require('../services/userServices');
+const { findOnlyUsers} = require('../services/userServices');
 
 module.exports = async (req, res, next) => {
   const { id } = req;
-  const userToVerify = await findUser(undefined, id);
-
+  const userToVerify = await findOnlyUsers(id);
   if (!userToVerify || !userToVerify.isAdmin) {
     return res.status(401).json({
       errors: {

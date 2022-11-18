@@ -10,9 +10,18 @@ const productUpdateValidator = require('../middlewares/validators/productUpdate'
 const userExtractor = require('../middlewares/userExtractor');
 const adminVerification = require('../middlewares/adminVerification');
 
-const { productCreate, updateProduct } = require('../controllers/api/productController');
+const {
+  productCreate,
+  updateProduct,
+  deleteProduct,
+  getProduct,
+  getAllProduct,
+} = require('../controllers/api/productController');
 
-router.post('/', userExtractor, adminVerification, upload.array('images'), productCreateValidator, productCreate);
 router.put('/:id', userExtractor, adminVerification, upload.array('images'), productUpdateValidator, updateProduct);
+router.delete('/:id', userExtractor, adminVerification, deleteProduct);
+router.get('/:id', getProduct);
+router.get('/', getAllProduct);
+router.post('/', userExtractor, adminVerification, upload.array('images'), productCreateValidator, productCreate);
 
 module.exports = router;

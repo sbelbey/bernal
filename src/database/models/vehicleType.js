@@ -10,9 +10,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(20),
       allowNull: false,
     },
-    vehicle: {
-      type: DataTypes.INTEGER,
+    vehicleId: {
       allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
   };
 
