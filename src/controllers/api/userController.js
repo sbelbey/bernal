@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
-const { createUser, findUser, updateUser, allUsers } = require('../../services/userServices');
+const { createUser, findUser, updateUser, allUsers, findOnlyUsers } = require('../../services/userServices');
 const { userCleaner } = require('../../helpers/dataCleaner');
 const { paging } = require('../../helpers/paging');
 
@@ -47,7 +47,7 @@ module.exports = {
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
-      const userLoggedIn = await findUser(email);
+      const userLoggedIn = await findOnlyUsers(undefined, email);
       if (userLoggedIn === null) {
         return res.status(401).json({
           errors: {

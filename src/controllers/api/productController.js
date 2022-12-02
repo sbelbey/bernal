@@ -2,13 +2,21 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 
 const { findOnlyUsers } = require('../../services/userServices');
-const { addProduct, findProduct, changeProduct, allProducts } = require('../../services/productServices');
+const {
+  addProduct,
+  findProduct,
+  changeProduct,
+  allProducts,
+  addVehicle,
+  addVehicleType,
+} = require('../../services/productServices');
 const { addProductImages, deleteProductImages, findProductImages } = require('../../services/stockImagesServices');
 const {
   addCategoryProduct,
   deleteProductCategories,
   findProductCategories,
 } = require('../../services/categoryServices');
+const { findVhicleType } = require('../../services/vehicleTypeServices');
 
 const { productCleaner } = require('../../helpers/dataCleaner');
 const { paging } = require('../../helpers/paging');
@@ -48,7 +56,6 @@ module.exports = {
         categories: req.body.categories,
         createdBy: id,
         updatedBy: id,
-        // vehicles: req.body.vehicles ?? null,
       };
 
       const images = req.files
@@ -61,11 +68,19 @@ module.exports = {
         : null;
 
       const categories = req.body.categories.toLowerCase().split(',');
+      const vehiclesToAdd = req.body.vehicles.split(',').map((product) => Object(product.trim()));
 
       // Create the product with all it relations.
       const productCreated = await addProduct(productToCreate);
       await addCategoryProduct(id, productCreated.id, categories);
       await addProductImages(productCreated.id, images);
+      if (vehiclesToAdd.length > 0) {
+        await addVehicle(productCreated, vehiclesToAdd);
+        vehiclesToAdd.map(async (vehicle) => {
+          const vehicleFound = await findVhicleType(vehicle);
+          await addVehicleType(productCreated, vehicleFound);
+        });
+      }
 
       // Get the product created.
       const productWithImages = await findProduct(productCreated.id);
@@ -102,6 +117,8 @@ module.exports = {
         updatedBy: userId,
       };
 
+      const updatedProduct = await changeProduct(productToUpdate, updateData);
+
       //Update the product images if the client changed it.
       if (req.files.length > 0) {
         const images = imagesObjectConstractor(req.files);
@@ -117,8 +134,15 @@ module.exports = {
         await addCategoryProduct(userId, id, categories);
       }
 
-      const updatedProduct = await changeProduct(productToUpdate, updateData);
+      const vehiclesToAdd = req.body.vehicles.split(',').map((product) => Object(product.trim()));
 
+      if (vehiclesToAdd.length > 0) {
+        await addVehicle(updatedProduct, vehiclesToAdd);
+        vehiclesToAdd.map(async (vehicle) => {
+          const vehicleFound = await findVhicleType(vehicle);
+          await addVehicleType(updatedProduct, vehicleFound);
+        });
+      }
       return res.status(202).json({ message: 'Product updated successfully', Product: updatedProduct });
     } catch (error) {
       res.status(500).json({ message: error.message });

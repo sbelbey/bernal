@@ -24,9 +24,13 @@ const userServices = {
       return { message: error.message };
     }
   },
-  findOnlyUsers: async (id) => {
+  findOnlyUsers: async (id = '', email = '') => {
     try {
-      const userFound = await User.findByPk(id);
+      const userFound = await User.findOne({
+        where: {
+          [Op.or]: [{ email: email }, { id: id }],
+        },
+      });
       return userFound;
     } catch (error) {
       return { message: error.message };

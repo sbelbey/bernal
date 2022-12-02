@@ -13,6 +13,7 @@ module.exports = {
             { model: vehicleData.model },
             { engine: vehicleData.engine },
             { year: vehicleData.year },
+            { isActive: true },
           ],
         },
         include: { all: true },
@@ -37,6 +38,40 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+    }
+  },
+  findByPk: async (vehicleId) => {
+    try {
+      const vehicle = await Vehicle.findOne({
+        where: {
+          [Op.and]: [{ isActive: true }, { id: vehicleId }],
+        },
+        include: { all: true },
+      });
+      return vehicle;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  updateVehicle: async (vehicleToUpdate, vehicleNewData) => {
+    try {
+      const vehicleUpdated = await vehicleToUpdate.update(vehicleNewData, { include: 'types' });
+      return vehicleUpdated;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  getAll: async (offset) => {
+    try {
+      const { count, rows } = await Vehicle.findAndCountAll({
+        include: { all: true },
+        limit: 10,
+        offset: offset,
+      });
+
+      return { count, rows };
+    } catch (error) {
+      return { message: error.message };
     }
   },
 };

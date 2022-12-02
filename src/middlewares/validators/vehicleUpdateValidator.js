@@ -2,34 +2,30 @@ const { check } = require('express-validator');
 
 module.exports = [
   check('brand')
-    .notEmpty()
-    .withMessage('Have to provide a brand')
     .isLength({ max: 40 })
     .withMessage('The brand must not be greater than 40 characters.')
     .trim()
-    .escape(),
+    .escape()
+    .optional(),
   check('model')
-    .notEmpty()
-    .withMessage('Have to provide a model')
     .isLength({ max: 40 })
     .withMessage('The model must not be greater than 40 characters.')
     .trim()
-    .escape(),
+    .escape()
+    .optional(),
   check('engine')
-    .notEmpty()
-    .withMessage('Have to provide an engine')
     .isLength({ max: 40 })
     .withMessage('The engine must not be greater than 40 characters.')
     .trim()
-    .escape(),
+    .escape()
+    .optional(),
   check('year').optional().isDate().withMessage('The year must be a datetime type').toDate(),
   check('type')
-    .notEmpty()
-    .withMessage('Have to provide an engine')
     .isLength({ max: 20 })
     .withMessage('The type must not be greater than 20 characters.')
     .trim()
-    .escape(),
+    .escape()
+    .optional(),
   check('products')
     .custom((value) => {
       let val = value.split(',').map((product) => {

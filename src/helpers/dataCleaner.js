@@ -34,4 +34,22 @@ module.exports = {
 
     return productData;
   },
+  vehicleCleaner: (vehicleData) => {
+    delete vehicleData.dataValues.createdAt;
+    delete vehicleData.dataValues.createdBy;
+    delete vehicleData.dataValues.updatedAt;
+    delete vehicleData.dataValues.updatedBy;
+    delete vehicleData.dataValues.created_by;
+    delete vehicleData.dataValues.updated_by;
+    delete vehicleData.dataValues.users;
+    vehicleData.dataValues.products.map((product) => {
+      delete product.dataValues.isActive;
+      delete product.dataValues.createdAt;
+      delete product.dataValues.createdBy;
+      delete product.dataValues.updatedAt;
+      delete product.dataValues.updatedBy;
+    });
+
+    return vehicleData;
+  },
 };
