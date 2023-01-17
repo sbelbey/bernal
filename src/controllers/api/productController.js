@@ -68,7 +68,9 @@ module.exports = {
         : null;
 
       const categories = req.body.categories.toLowerCase().split(',');
-      const vehiclesToAdd = req.body.vehicles.split(',').map((product) => Object(product.trim()));
+      const vehiclesToAdd = req.body.vehicles
+        ? req.body.vehicles.split(',').map((product) => Object(product.trim()))
+        : [];
 
       // Create the product with all it relations.
       const productCreated = await addProduct(productToCreate);
@@ -205,19 +207,17 @@ module.exports = {
   getAllProduct: async (req, res) => {
     try {
       //Get the page
-      const pageOffset = req.query.page ? (req.query.page - 1) * 10 : 0;
-      const page = req.query.page ?? 0;
+      const pageOffset = Number(req.query.page) ? (Number(req.query.page) - 1) * 10 : 0;
+      const page = Number(req.query.page) ?? 0;
 
       //Get the products information
       let { count, rows } = await allProducts(pageOffset);
-
       //Get user token
       const authorization = req.get('authorization');
       let token = '';
       if (authorization && authorization.toLowerCase().startsWith('bearer')) {
         token = authorization.substring(7);
       }
-
       //Decoding the token
       let decodedToken = {};
       try {

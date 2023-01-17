@@ -8,7 +8,5 @@ module.exports = function createExpressApp() {
     console.log(`Servidor de express escuchando puerto ${PORT}`);
   });
 
-
-
   return app;
 };

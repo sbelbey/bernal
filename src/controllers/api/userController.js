@@ -79,7 +79,6 @@ module.exports = {
       });
 
       const userCleaned = await userCleaner(userLoggedIn);
-
       return res.status(202).json({
         message: 'User logged in successfully',
         token: token,

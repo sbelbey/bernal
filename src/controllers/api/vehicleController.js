@@ -49,8 +49,10 @@ module.exports = {
       vehicleCreated = await createVehicle(vehicleToCreate);
 
       //Add the products
-      const productsToAdd = req.body.products.split(',').map((product) => Object(product.trim()));
-      await addProduct(productsToAdd, vehicleCreated);
+      const productsToAdd = req.body.products
+        ? req.body.products.split(',').map((product) => Object(product.trim()))
+        : [];
+      if (productsToAdd.length > 0) await addProduct(productsToAdd, vehicleCreated);
 
       return res.status(201).json({ message: 'Vehicle was created successfully', vehicle: vehicleCreated });
     } catch (error) {

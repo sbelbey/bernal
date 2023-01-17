@@ -19,7 +19,7 @@ categoryServices = {
     try {
       await categoryData.forEach(async (category) => {
         await category.removeProduct(productId);
-      })
+      });
     } catch (error) {
       console.log(error);
     }
@@ -28,6 +28,16 @@ categoryServices = {
     try {
       const productCategories = product.getCategories();
       return productCategories;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  allCategories: async () => {
+    try {
+      const categories = await Category.findAll({
+        attributes: ['name'],
+      });
+      return categories;
     } catch (error) {
       console.log(error);
     }
