@@ -58,7 +58,7 @@ module.exports = {
       const vehicleUpdated = await vehicleToUpdate.update(vehicleNewData, { include: 'types' });
       return vehicleUpdated;
     } catch (error) {
-      console.log(error);
+      return { message: error.message };
     }
   },
   getAll: async (offset) => {
@@ -70,6 +70,22 @@ module.exports = {
       });
 
       return { count, rows };
+    } catch (error) {
+      return { message: error.message };
+    }
+  },
+  getAllBrands: async () => {
+    try {
+      const allBrands = await Vehicle.findAll({ attributes: ['brand'] });
+      return allBrands;
+    } catch (error) {
+      return { message: error.message };
+    }
+  },
+  getProductByBrand: async (brand) => {
+    try {
+      const producsByBrand = await Vehicle.findAll({ where: { brand: brand }, include: { all: true } });
+      return producsByBrand;
     } catch (error) {
       return { message: error.message };
     }

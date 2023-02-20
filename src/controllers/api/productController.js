@@ -9,6 +9,7 @@ const {
   allProducts,
   addVehicle,
   addVehicleType,
+  allProductsByBrand,
 } = require('../../services/productServices');
 const { addProductImages, deleteProductImages, findProductImages } = require('../../services/stockImagesServices');
 const {
@@ -22,6 +23,14 @@ const { productCleaner } = require('../../helpers/dataCleaner');
 const { paging } = require('../../helpers/paging');
 
 const imagesObjectConstractor = require('../../helpers/imagesObjectConstractor');
+const log4js = require('log4js');
+const envConfig = require('../../config/envConfig');
+let logger;
+if (envConfig.NODE_ENV === 'prod') {
+  logger = log4js.getLogger('production');
+} else {
+  logger = log4js.getLogger();
+}
 
 module.exports = {
   productCreate: async (req, res) => {
@@ -89,6 +98,7 @@ module.exports = {
 
       res.status(201).json({ message: 'Product was created successfully', product: productWithImages });
     } catch (error) {
+      logger.fatal(error.message);
       res.status(500).json({ message: error.message });
     }
   },
@@ -147,6 +157,7 @@ module.exports = {
       }
       return res.status(202).json({ message: 'Product updated successfully', Product: updatedProduct });
     } catch (error) {
+      logger.fatal(error.message);
       res.status(500).json({ message: error.message });
     }
   },
@@ -166,6 +177,7 @@ module.exports = {
 
       return res.status(202).json({ message: 'Product was deleted successfully', productId: id });
     } catch (error) {
+      logger.fatal(error.message);
       res.status(500).json({ message: error.message });
     }
   },
@@ -187,7 +199,7 @@ module.exports = {
       try {
         decodedToken = jwt.verify(token, process.env.SECRET);
       } catch (error) {
-        console.log(error);
+        logger.trace(error.message);
       }
 
       const user = await findOnlyUsers(decodedToken.id);
@@ -201,6 +213,7 @@ module.exports = {
 
       return res.status(200).json({ message: 'Product was found successfully', product: productFound });
     } catch (error) {
+      logger.fatal(error.message);
       res.status(500).json({ message: error.message });
     }
   },
@@ -208,28 +221,33 @@ module.exports = {
     try {
       //Get the page
       const pageOffset = Number(req.query.page) ? (Number(req.query.page) - 1) * 10 : 0;
+      const category = req.query.category || null;
+      console.log("🚀 ~ file: productController.js:225 ~ getAllProduct: ~ category", category)
       const page = Number(req.query.page) ?? 0;
 
       //Get the products information
-      let { count, rows } = await allProducts(pageOffset);
+      let { count, rows } = await allProducts(pageOffset, category);
       //Get user token
       const authorization = req.get('authorization');
       let token = '';
       if (authorization && authorization.toLowerCase().startsWith('bearer')) {
         token = authorization.substring(7);
       }
+
       //Decoding the token
       let decodedToken = {};
       try {
         decodedToken = jwt.verify(token, process.env.SECRET);
       } catch (error) {
-        console.log(error);
+        logger.warn(error.message);
       }
 
       const user = await findOnlyUsers(decodedToken.id);
 
-      if (!token || !decodedToken.id || !user.isAdmin) rows.forEach((row) => productCleaner(row));
-
+      if (!token || !decodedToken.id || !user.isAdmin)
+        rows.forEach((row) => {
+          return productCleaner(row);
+        });
       let data = {
         countItems: count,
         items: rows,
@@ -240,7 +258,9 @@ module.exports = {
 
       return res.status(200).json(productsData);
     } catch (error) {
-      console.log(error);
+      logger.fatal(error.message);
+      res.status(500).json({ message: error.message });
     }
   },
+  getProductsByCategory: (req, res) => {},
 };

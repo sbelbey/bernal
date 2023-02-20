@@ -8,7 +8,12 @@ const {
   findByPk,
   updateVehicle,
   getAll,
+  getAllBrands,
+  getProductByBrand,
 } = require('../../services/vehicleServices');
+
+const { findProduct } = require('../../services/productServices');
+
 const { addType } = require('../../services/vehicleTypeServices');
 
 const { vehicleCleaner } = require('../../helpers/dataCleaner');
@@ -134,6 +139,35 @@ module.exports = {
       !vehiclesData
         ? res.status(404).json({ error: { message: 'There is nothing here' } })
         : res.status(201).json({ message: 'Vehicle was found successfully', vehicles: vehiclesData });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  getAllBrands: async (req, res) => {
+    try {
+      const vehiclesBrands = await getAllBrands();
+      res.status(200).json({ message: 'Brands were found successfully', vehiclesBrands });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  getProductByBrand: async (req, res) => {
+    try {
+      const brand = req.query.brand;
+      const brandsProduct = await getProductByBrand(brand);
+      const findProductById = async (id) => {
+        const product = await findProduct(id);
+        return product;
+      };
+
+      let products = [];
+      brandsProduct.forEach((product) => (products = [...products, ...product.products]));
+      const productsID = products.map((product) => product.id);
+      products = [];
+      for (let i = 0; i < productsID.length; i++) {
+        products.push(await findProductById(productsID[i]));
+      }
+      res.status(200).json({ message: 'Products were found successfully', products });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

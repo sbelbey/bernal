@@ -35,7 +35,7 @@ categoryServices = {
   allCategories: async () => {
     try {
       const categories = await Category.findAll({
-        attributes: ['name'],
+        attributes: ['name', 'id'],
       });
       return categories;
     } catch (error) {

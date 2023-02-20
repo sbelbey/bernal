@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4,
     },
     name: {
-      type: DataTypes.STRING(80),
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
     url: {
-      type: DataTypes.STRING(80),
+      type: DataTypes.STRING(255),
       allowNull: false,
     },
   };

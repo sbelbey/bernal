@@ -1,9 +1,15 @@
+const passport = require('passport');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
+
 const { createUser, findUser, updateUser, allUsers, findOnlyUsers } = require('../../services/userServices');
+
 const { userCleaner } = require('../../helpers/dataCleaner');
 const { paging } = require('../../helpers/paging');
+const { createToken } = require('../../helpers/generateToken');
+
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports = {
   register: async (req, res) => {
@@ -11,7 +17,7 @@ module.exports = {
       const { email, emailConfirm, password } = req.body;
       const resultValidation = validationResult(req);
       if (resultValidation.errors.length > 0) {
-        return res.status(400).json({
+        return res.status(409).json({
           errors: resultValidation.mapped(),
           oldData: { email: email, emailConfirm: emailConfirm },
         });
@@ -69,16 +75,9 @@ module.exports = {
         });
       }
 
-      const userForToken = {
-        id: userLoggedIn.id,
-        userEmail: userLoggedIn.email,
-      };
-
-      const token = jwt.sign(userForToken, process.env.SECRET, {
-        expiresIn: 60 * 60 * 24 * 7,
-      });
-
+      const token = createToken(userLoggedIn.id, userLoggedIn.email, userLoggedIn.isAdmin);
       const userCleaned = await userCleaner(userLoggedIn);
+
       return res.status(202).json({
         message: 'User logged in successfully',
         token: token,
@@ -97,7 +96,7 @@ module.exports = {
           oldData: req.body,
         });
       }
-      const { id } = req;
+      const { id } = req.user;
       const dataToUpdate = {
         id: id,
         email: req.body.email ? req.body.email : null,
@@ -150,7 +149,7 @@ module.exports = {
   },
   getUser: async (req, res) => {
     try {
-      const { id } = req;
+      const { id } = req.user;
       const user = await findUser(undefined, id);
       const userCleaned = await userCleaner(user);
 
@@ -161,5 +160,34 @@ module.exports = {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
+  },
+  googleAuth: passport.authenticate('google', { scope: ['profile', 'email'] }),
+  googleAuthCallback: passport.authenticate('google', {
+    failureRedirect: '/api/v1/users/loginFailed',
+    successRedirect: process.env.CLIENT_URL,
+  }),
+  googleFailed: (req, res) => {
+    return res.status(401).json({
+      success: false,
+      msg: 'failure',
+    });
+  },
+
+  googleSuccess: async (req, res) => {
+    if (req.user) {
+      return res.status(200).json({
+        message: 'User logged in successfully',
+        token: req.user.token,
+        data: req.user,
+      });
+    }
+  },
+
+  logout: (req, res) => {
+    const { token } = req.body;
+    req.logout(function (err) {
+      if (err) null;
+      res.redirect(process.env.CLIENT_URL);
+    });
   },
 };

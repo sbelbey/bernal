@@ -1,4 +1,5 @@
-const { User, Product } = require('../database/models');
+const { User, Product, Category } = require('../database/models');
+const { Op } = require('sequelize');
 
 const productService = {
   addProduct: async (productData) => {
@@ -25,10 +26,25 @@ const productService = {
       return { message: error.message };
     }
   },
-  allProducts: async (offset) => {
+  allProducts: async (offset, category) => {
     try {
+      let include;
+
+      category !== 'null' && category !== undefined
+        ? (include = [
+            {
+              model: Category,
+              as: 'categories',
+              where: { name: { [Op.eq]: category } },
+              required: true,
+            },
+            { all: true },
+          ])
+        : (include = [{ all: true }]);
+      console.log('🚀 ~ file: productServices.js:43 ~ allProducts: ~ include', include);
+
       const { count, rows } = await Product.findAndCountAll({
-        include: { all: true },
+        include: include,
         limit: 10,
         offset: offset,
       });
@@ -38,6 +54,7 @@ const productService = {
       return { message: error.message };
     }
   },
+
   addVehicle: async (productData, vehicleData) => {
     try {
       await vehicleData.forEach(async (vehicle) => {

@@ -41,18 +41,18 @@ const userServices = {
       const { id } = userData;
       delete userData.id;
 
-      const userToUpdate = await userServices.findUser(undefined, id);
+      const userToUpdate = await userServices.findOnlyUsers(id, undefined);
       if (!userToUpdate) {
         return { error: { message: 'El usuario no existe' } };
       }
 
       if (userData.avatar) {
-        if (userToUpdate.avatars.length > 0) {
+        if (userToUpdate.avatars?.length > 0) {
           const avatarToDelete = await AvatarImage.findByPk(userToUpdate.avatars[0].dataValues.id);
           avatarToDelete.removeUser(userToUpdate.id);
           avatarToDelete.destroy();
         }
-
+        
         const image = await AvatarImage.create({
           name: userData.avatar,
           url: userData.avatar,
@@ -73,6 +73,8 @@ const userServices = {
         city: userData.city ?? userToUpdate.city,
         province: userData.province ?? userToUpdate.province,
       });
+
+      console.log('🚀 ~ file: userServices.js:76 ~ updateUser: ~ userModified', userModified);
 
       return userModified;
     } catch (error) {
