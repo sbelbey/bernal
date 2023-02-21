@@ -14,5 +14,8 @@ router.use('/vehicles', vehicleRouter);
 router.use('/categories', categoriesRouter);
 router.use('/checkout', checkoutRouter);
 router.use('/sendEmail', emailSender);
+router.use('/', (req, res) => {
+  res.send('Hola Mundo');
+});
 
 module.exports = router;
