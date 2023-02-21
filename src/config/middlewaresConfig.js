@@ -6,6 +6,8 @@ const session = require('express-session');
 const passport = require('passport');
 const googleStrategy = require('../strategies/google');
 const passportUtils = require('../utils/passportUtils');
+const dotenv = require('dotenv');
+dotenv.config();
 
 module.exports = {
   config(app) {

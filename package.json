@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/sbelbey/bernal#readme",
   "dependencies": {
+    "aws-sdk": "^2.1319.0",
     "bcryptjs": "^2.4.3",
     "cluster": "^0.7.7",
     "compression": "^1.7.4",
