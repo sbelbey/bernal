@@ -11,7 +11,12 @@ dotenv.config();
 
 module.exports = {
   config(app) {
-    app.use(cors());
+    app.use(
+      cors({
+        origin: ['http://bernal-test-s3.s3-website-sa-east-1.amazonaws.com'],
+        credentials: true,
+      })
+    );
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(

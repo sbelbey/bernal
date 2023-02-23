@@ -11,9 +11,9 @@ const mp = async (items, coutes, shipping) => {
     let config = {
       items: items,
       back_urls: {
-        success: 'http://localhost:8080/api/v1/checkout/feedback',
-        failure: 'http://localhost:8080/api/v1/checkout/feedback',
-        pending: 'http://localhost:8080/api/v1/checkout/feedback',
+        success: 'https://bernal-test-lb-515992665.sa-east-1.elb.amazonaws.com/api/v1/checkout/feedback',
+        failure: 'https://bernal-test-lb-515992665.sa-east-1.elb.amazonaws.com/api/v1/checkout/feedback',
+        pending: 'https://bernal-test-lb-515992665.sa-east-1.elb.amazonaws.com/api/v1/checkout/feedback',
       },
       payment_method: {
         installment: coutes,

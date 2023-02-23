@@ -13,7 +13,7 @@ const strategy = new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://bernal-test-lb-515992665.sa-east-1.elb.amazonaws.com/api/v1/users/google/callback',
+    callbackURL: 'https://bernal-test-lb-515992665.sa-east-1.elb.amazonaws.com/api/v1/users/google/callback',
   },
   async (accessToken, refreshToken, profile, done) => {
     const { _json } = profile;
