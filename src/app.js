@@ -4,7 +4,7 @@ const log4jsConfig = require('./config/log4jsConfig');
 const dotenv = require('dotenv');
 
 const apiRouter = require('./routes/apiRouter');
-const apiRouterIndex = require('./routes/index.js/index');
+const apiRouterIndex = require('./routes/index.js');
 
 // LOAD .env
 dotenv.config();

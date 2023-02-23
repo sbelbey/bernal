@@ -129,20 +129,14 @@ module.exports = {
   },
   getAllUsers: async (req, res) => {
     try {
-      const pageOffset = req.query.page ? (req.query.page - 1) * 10 : 0;
-      const page = req.query.page ?? 0;
-
-      let { count, rows } = await allUsers(pageOffset);
-      rows = await rows.map((user) => userCleaner(user));
+      let users = await allUsers(pageOffset);
+      // rows = await rows.map((user) => userCleaner(user));
 
       let data = {
-        countItems: count,
-        items: rows,
+        users,
       };
 
-      const usersPaginated = await paging(data, page, 'users');
-
-      return res.status(200).json(usersPaginated);
+      return res.status(200).json({ message: 'User found successfully', data });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

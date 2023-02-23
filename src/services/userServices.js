@@ -52,7 +52,7 @@ const userServices = {
           avatarToDelete.removeUser(userToUpdate.id);
           avatarToDelete.destroy();
         }
-        
+
         const image = await AvatarImage.create({
           name: userData.avatar,
           url: userData.avatar,
@@ -83,11 +83,8 @@ const userServices = {
   },
   allUsers: async (offset) => {
     try {
-      const { count, rows } = await User.findAndCountAll({
-        limit: 10,
-        offset: offset,
-      });
-      return { count, rows };
+      const users = await User.findAll();
+      return users;
     } catch (error) {
       return { message: error.message };
     }

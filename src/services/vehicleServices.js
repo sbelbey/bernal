@@ -1,7 +1,7 @@
 const { Vehicle } = require('../database/models');
 const { VehicleType } = require('../database/models');
 
-const { Op } = require('Sequelize');
+const { Op } = require('sequelize');
 
 module.exports = {
   findVehicle: async (vehicleData) => {
