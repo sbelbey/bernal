@@ -10,6 +10,7 @@ const {
   addVehicle,
   addVehicleType,
   allProductsByBrand,
+  allProductsDash,
 } = require('../../services/productServices');
 const { addProductImages, deleteProductImages, findProductImages } = require('../../services/stockImagesServices');
 const {
@@ -45,14 +46,14 @@ module.exports = {
       }
 
       // Create all the objects needed to add a new product.
-      const { id } = req;
+      const { id } = req.user;
       const productToCreate = {
         name: req.body.name,
         brand: req.body.brand,
         model: req.body.model ?? null,
         price: req.body.price,
         description: req.body.description,
-        origin: req.body.origin,
+        origin: req.body.origins,
         maintenanceFree: req.body.maintenanceFree ?? null,
         waranty: req.body.waranty,
         voltage: req.body.voltage ?? null,
@@ -77,9 +78,7 @@ module.exports = {
         : null;
 
       const categories = req.body.categories.toLowerCase().split(',');
-      const vehiclesToAdd = req.body.vehicles
-        ? req.body.vehicles.split(',').map((product) => Object(product.trim()))
-        : [];
+      const vehiclesToAdd = req.body.vehicles ? req.body.vehicles.split(',').map((product) => product.trim()) : [];
 
       // Create the product with all it relations.
       const productCreated = await addProduct(productToCreate);
@@ -116,7 +115,7 @@ module.exports = {
         model: req.body.model ?? productToUpdate.model,
         price: req.body.price ?? productToUpdate.price,
         description: req.body.description ?? productToUpdate.description,
-        origin: req.body.origin ?? productToUpdate.origin,
+        origin: req.body.origins ?? productToUpdate.origin,
         maintenanceFree: req.body.maintenanceFree ?? productToUpdate.maintenanceFree,
         waranty: req.body.waranty ?? productToUpdate.waranty,
         voltage: req.body.voltage ?? productToUpdate.voltage,
@@ -222,7 +221,6 @@ module.exports = {
       //Get the page
       const pageOffset = Number(req.query.page) ? (Number(req.query.page) - 1) * 10 : 0;
       const category = req.query.category || null;
-      console.log("🚀 ~ file: productController.js:225 ~ getAllProduct: ~ category", category)
       const page = Number(req.query.page) ?? 0;
 
       //Get the products information
@@ -262,5 +260,17 @@ module.exports = {
       res.status(500).json({ message: error.message });
     }
   },
-  getProductsByCategory: (req, res) => {},
+  getAllProductWOPage: async (req, res) => {
+    try {
+      const products = await allProductsDash();
+      const productsData = {
+        info: 'success',
+        data: products,
+      };
+      return res.status(200).json(productsData);
+    } catch (error) {
+      logger.fatal(error.message);
+      res.status(500).json({ message: error.message });
+    }
+  },
 };

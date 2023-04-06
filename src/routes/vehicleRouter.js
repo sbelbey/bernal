@@ -15,7 +15,7 @@ const {
   trahsVehicle,
   getAllVehicles,
   getAllBrands,
-  getProductByBrand
+  getProductByBrand,
 } = require('../controllers/api/vehicleController');
 
 router.post('/', userExtractor, adminVerification, vehicleCreateValidator, vehicleCreate);

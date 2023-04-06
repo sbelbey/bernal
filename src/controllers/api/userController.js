@@ -87,6 +87,45 @@ module.exports = {
       res.status(500).json({ message: error.message });
     }
   },
+
+  adminLogin: async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      const userLoggedIn = await findOnlyUsers(undefined, email);
+      if (userLoggedIn === null || userLoggedIn.isAdmin !== true) {
+        return res.status(401).json({
+          errors: {
+            email: {
+              msg: 'Las credenciales no son válidas',
+            },
+          },
+        });
+      }
+
+      const okPassword = await bcrypt.compare(password, userLoggedIn.hashPassword);
+      if (!okPassword) {
+        return res.status(401).json({
+          errors: {
+            email: {
+              msg: 'Las credenciales no son válidas',
+            },
+          },
+        });
+      }
+
+      const token = createToken(userLoggedIn.id, userLoggedIn.email, userLoggedIn.isAdmin);
+      const userCleaned = await userCleaner(userLoggedIn);
+
+      return res.status(202).json({
+        message: 'User logged in successfully',
+        token: token,
+        data: userCleaned,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+
   update: async (req, res) => {
     try {
       const resultValidation = validationResult(req);
@@ -129,7 +168,7 @@ module.exports = {
   },
   getAllUsers: async (req, res) => {
     try {
-      let users = await allUsers(pageOffset);
+      let users = await allUsers();
       // rows = await rows.map((user) => userCleaner(user));
 
       let data = {

@@ -56,6 +56,7 @@ module.exports = [
     .escape(),
   check('images')
     .custom((value, { req }) => {
+      console.log('🚀 ~ file: productUpdate.js:84 ~ .custom ~ req:', req);
       let image = req.files.map((file) => {
         let imagen = file.filename;
         let extension = path.extname(imagen);
@@ -68,17 +69,20 @@ module.exports = [
             return true;
           case '.gif':
             return true;
+          case '.svg':
+            return true;
           default:
             return false;
         }
       });
       if (image.includes(false)) {
-        throw new Error('The images must be jpg, jpeg, png or gif.');
+        throw new Error('The images must be jpg, jpeg, png, svg or gif.');
       }
       return true;
     })
-    .withMessage('The images must be jpg, jpeg, png or gif')
+    .withMessage('The images must be jpg, jpeg, png, svg or gif.')
     .optional(),
+
   check('vehicles')
     .custom((value) => {
       let val = value.split(',').map((vehicle) => {

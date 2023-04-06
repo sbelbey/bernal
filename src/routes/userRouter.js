@@ -13,6 +13,7 @@ const adminVerification = require('../middlewares/adminVerification');
 const {
   register,
   login,
+  adminLogin,
   update,
   getAllUsers,
   getUser,
@@ -25,6 +26,7 @@ const {
 
 router.post('/register', userRegisterValidations, register);
 router.post('/login', login);
+router.post('/adminLogin', adminLogin);
 router.get('/google', googleAuth);
 router.get('/google/callback', googleAuthCallback);
 router.get('/loginFailed', googleFailed);

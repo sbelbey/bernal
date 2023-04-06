@@ -81,7 +81,7 @@ const userServices = {
       return { message: error.message };
     }
   },
-  allUsers: async (offset) => {
+  allUsers: async () => {
     try {
       const users = await User.findAll();
       return users;

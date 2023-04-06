@@ -42,8 +42,8 @@ module.exports = {
           type: vehicleType,
         },
         isActive: true,
-        createdBy: req.id,
-        updatedBy: req.id,
+        createdBy: req.user.id,
+        updatedBy: req.user.id,
       };
 
       let vehicleCreated = await findVehicle(vehicleToCreate);

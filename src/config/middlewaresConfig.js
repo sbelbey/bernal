@@ -13,7 +13,11 @@ module.exports = {
   config(app) {
     app.use(
       cors({
-        origin: ['http://bernal-test-s3.s3-website-sa-east-1.amazonaws.com'],
+        origin: [
+          'http://bernal-test-s3.s3-website-sa-east-1.amazonaws.com',
+          'http://localhost:3000',
+          'http://localhost:3001',
+        ],
         credentials: true,
       })
     );

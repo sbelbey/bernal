@@ -37,7 +37,7 @@ module.exports = [
     .withMessage('The description must be at least 20 characters long.')
     .trim()
     .escape(),
-  check('origin')
+  check('origins')
     .notEmpty()
     .withMessage('Have to provide an origin')
     .isLength({ max: 10 })
@@ -79,6 +79,8 @@ module.exports = [
             return true;
           case '.gif':
             return true;
+          case '.svg':
+            return true;
           default:
             return false;
         }
@@ -88,7 +90,7 @@ module.exports = [
       }
       return true;
     })
-    .withMessage('The images must be jpg, jpeg, png or gif')
+    .withMessage('The images must be jpg, jpeg, png or gif. 2')
     .optional(),
   check('vehicles')
     .custom((value) => {

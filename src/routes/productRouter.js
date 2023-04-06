@@ -16,10 +16,12 @@ const {
   deleteProduct,
   getProduct,
   getAllProduct,
+  getAllProductWOPage,
 } = require('../controllers/api/productController');
 
 router.put('/:id', userExtractor, adminVerification, upload.array('images'), productUpdateValidator, updateProduct);
 router.delete('/:id', userExtractor, adminVerification, deleteProduct);
+router.get('/all', userExtractor, adminVerification, getAllProductWOPage);
 router.get('/:id', getProduct);
 router.get('/', getAllProduct);
 router.post('/', userExtractor, adminVerification, upload.array('images'), productCreateValidator, productCreate);

@@ -3,7 +3,7 @@ const { Op } = require('sequelize');
 
 const productService = {
   addProduct: async (productData) => {
-    try {
+    try {      
       const productCreated = await Product.create(productData);
       return productCreated;
     } catch (error) {
@@ -41,7 +41,6 @@ const productService = {
             { all: true },
           ])
         : (include = [{ all: true }]);
-      console.log('🚀 ~ file: productServices.js:43 ~ allProducts: ~ include', include);
 
       const { count, rows } = await Product.findAndCountAll({
         include: include,
@@ -67,6 +66,15 @@ const productService = {
   addVehicleType: async (productData, vehicleTypeData) => {
     try {
       await productData.addVehicleType(vehicleTypeData);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  allProductsDash: async () => {
+    try {
+      const products = await Product.findAll();
+      return products;
     } catch (error) {
       console.log(error);
     }
